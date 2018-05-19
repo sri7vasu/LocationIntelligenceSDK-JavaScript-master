@@ -1,0 +1,29 @@
+<html>
+	<head>
+		<script src='http://code.jquery.com/jquery-2.1.0.min.js' type='text/javascript'></script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/Base64/1.0.0/base64.min.js' type='text/javascript'></script>
+    <!--include service here-->
+		<script src="baseService.js"></script>
+		<!--include the geo911 api file here-->
+		<script src="geo911.js"></script>
+		<script type='text/javascript'>
+
+		function callGeo911Address(){
+			var G911 = new GEOAPIS_V1.geo911('G2MrXTjD2omVrQjbZbjcVJiArNsH');
+			//enter the returned access token as explained in Obtaining Credentials section
+			G911.getPSAPByAddress({address:'4750 Walnut St, Boulder, CO'}, geoApisCallback);
+		}
+		
+		function geoApisCallback(data){
+			if(data !== undefined){
+				$('#ResponseDiv').html(JSON.stringify(data));
+			}
+		}
+		</script>
+	</head>
+	<body>
+		<h1>Geo911 SDK Test Page</h1>
+		<button type="button" onclick="callGeo911Address();">Geo911 ByAddress</button>
+		<div class="response" id="ResponseDiv">See Response Here !</div>
+	</body>
+</html>
