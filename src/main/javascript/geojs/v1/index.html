@@ -64,7 +64,8 @@
 			 						 var lines = processCsvData(geoZoneCsvOutput);
 			 						 if(lines)
 			 						 {
-										 for(var i=1; i<5; i++)
+										 try {
+										 for (var i=1; i<15; i++) //omit the header here
 										 {
 				                //call the service here for only first record
 				 							 GZ.getTravelBoundaryByTime({
@@ -84,6 +85,10 @@
 				 		 					 majorRoads: true, returnHoles: false, returnIslands: false,
 				 		 					 simplificationFactor: 0.5, bandingStyle: 'Donut', historicTrafficTimeBucket: 'None'}, geoApisCallback);
 									  }
+									} catch (e) {
+									} finally {
+
+									}
 
 										 //working response sample from documentation
 					 					// GZ.getTravelBoundaryByTime({point:'-73.99753,40.76181,epsg:4326', costs: 5, costUnit: 'min',
@@ -108,7 +113,8 @@
 
 				function geoApisCallback(data){
 					if(data !== undefined) {
-						$('#geoZoneResponseDiv').html(JSON.stringify(data));
+						var div = document.getElementById('geoZoneResponseDiv');//$('#geoZoneResponseDiv').html(JSON.stringify(data));
+            div.innerHTML += '<br/><br/>' + JSON.stringify(data);
 					}
 				}
 
@@ -142,6 +148,6 @@
 		      <input id="geoZoneCsv" type="file">
 					<button type="button" onclick="callGetTravelBoundaryByTime();">GeoZone callGetTravelBoundaryByTime</button>
 
-					<div class="response" id="geoZoneResponseDiv">See Response Here !</div>
+					<div class="response" id="geoZoneResponseDiv"></div>
 		</body>
 	</html>
