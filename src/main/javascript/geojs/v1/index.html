@@ -7,13 +7,37 @@
 		<!--include the geo911 api file here-->
 		<script src="geo911.js"></script>
 		<script type='text/javascript'>
+    var accessToken = 'G2MrXTjD2omVrQjbZbjcVJiArNsH';
+		function getToken() {
+				// Put your Key and Secret here to generate token
+				var key ='JE5Zupjhr3AArtbT6G6VaWzsPAsADOr8';
+				var secret ='bbnnF69GgkTSf9UN';
+				var tok = key + ':' + secret;
+				var hash = btoa(tok);
+				var BasicToken= "Basic " + hash;
+				$.ajax({
+					url: "https://api.pitneybowes.com/oauth/token",
+					type: 'POST',
+					headers: {
+						"Authorization":BasicToken
+					},
+					dataType: "json",
+					data: 'grant_type=client_credentials',
+					success: function(data){
+						//alert(JSON.stringify(data));
+					},
+					error:function(data){
+						alert(JSON.stringify(data));
+					}
+				});
+			}
 
-		function callGeo911Address(){
-			var G911 = new GEOAPIS_V1.geo911('G2MrXTjD2omVrQjbZbjcVJiArNsH');
-			//enter the returned access token as explained in Obtaining Credentials section
-			G911.getPSAPByAddress({address:'4750 Walnut St, Boulder, CO'}, geoApisCallback);
+		function callGeo911Address() {
+				var G911 = new GEOAPIS_V1.geo911(accessToken);
+				//enter the returned access token as explained in Obtaining Credentials section
+				G911.getPSAPByAddress({address:'4750 Walnut St, Boulder, CO'}, geoApisCallback);
 		}
-		
+
 		function geoApisCallback(data){
 			if(data !== undefined){
 				$('#ResponseDiv').html(JSON.stringify(data));
